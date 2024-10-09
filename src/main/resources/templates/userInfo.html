@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Информация о пользователе</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8d7da;
+            color: #721c24;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            border: 2px solid #721c24;
+            padding: 20px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #721c24;
+            margin-bottom: 20px;
+        }
+
+        .info {
+            margin-bottom: 20px;
+        }
+
+        .info label {
+            font-weight: bold;
+            color: #721c24;
+        }
+
+        .info p {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .button-delete {
+            background-color: #FF4D4D;
+        }
+
+        .button-delete:hover {
+            background-color: #cc0000;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Информация о пользователе</h1>
+    <div class="info">
+        <label>ID:</label>
+        <p th:text="${user.id}">1</p>
+        <label>Имя:</label>
+        <p th:text="${user.name}">Иван Иванов</p>
+        <label>Возраст:</label>
+        <p th:text="${user.age}">30</p>
+    </div>
+    <div class="button-container">
+        <a th:href="@{/admin/update(id=${user.id})}" class="button">Редактировать</a>
+        <form th:action="@{/admin/delete(id=${user.id})}" method="post" style="display:inline;">
+            <input type="hidden" name="id" th:value="${user.id}" />
+            <button type="submit" class="button button-delete">Удалить</button>
+        </form>
+    </div>
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="/admin/panel" class="button">Назад к списку пользователей</a>
+    </div>
+</div>
+</body>
+</html>

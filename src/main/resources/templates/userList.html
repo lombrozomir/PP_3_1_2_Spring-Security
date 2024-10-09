@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Список пользователей</title>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            border: 2px solid black;
+            background-color: #ffffff;
+            color: black;
+            margin: 20px auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-right: 1px solid #ccc;
+        }
+
+        th {
+            border-bottom: 3px solid #ccc;
+            text-align: center;
+        }
+
+        tr {
+            border-bottom: 1px solid #ccc;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        td:last-child, th:last-child {
+            border-right: none;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .button-edit {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .button-edit:hover {
+            background-color: #0056b3;
+        }
+
+        .button-delete {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .button-delete:hover {
+            background-color: #0056b3;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            margin-top: 30px;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+
+    </style>
+</head>
+<body>
+<h1>Список пользователей</h1>
+
+<div style="text-align: right;">
+    <a href="/logout" class="button">Выход</a>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Имя</th>
+        <th>Возраст</th>
+        <th>Email</th>
+        <th>Роль</th>
+        <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.age}"></td>
+        <td th:text="${user.username}"></td>
+        <td th:text="${user.roles}"></td>
+        <td>
+            <div class="button-container">
+                <a th:href="@{/admin/update(id=${user.id})}" class="button-edit">Редактировать</a>
+                <a th:href="@{/admin/read(id=${user.id})}" class="button-edit">Информация о пользователе</a>
+                <form th:action="@{/admin/delete(id=${user.id})}" method="post" style="display: inline">
+                    <input type="hidden" name="id" th:value="${user.id}"/>
+                    <button type="submit" class="button-delete">Удалить</button>
+                </form>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div style="text-align: center;">
+    <a href="/admin/create" class="button">Добавить нового пользователя</a>
+</div>
+</body>
+</html>
